@@ -1,4 +1,4 @@
-# Agent Instructions: Marsbase Monitoring
+﻿# Agent Instructions: Marsbase Monitoring
 
 This is a group assignment in Programmering 2. The goal is not only working code, but also using an AI agent systematically: Understand → Plan → Implement → Test → Review → Improve → Explain.
 
@@ -13,8 +13,8 @@ A multithreaded Java server (Mars HQ) receives measurements from several sensor 
 ```bash
 mvn compile
 mvn test
-mvn exec:java -Dexec.mainClass=server.MarsServer
-mvn exec:java -Dexec.mainClass=client.SensorClient -Dexec.args="TEMP"
+mvn exec:java -Dexec.mainClass=org.zealand.server.MarsServer
+mvn exec:java -Dexec.mainClass=org.zealand.client.SensorClient -Dexec.args="TEMP"
 ```
 
 (Update if the structure changes.)
@@ -23,11 +23,11 @@ mvn exec:java -Dexec.mainClass=client.SensorClient -Dexec.args="TEMP"
 
 Packages:
 
-1. `contract`: `SensorType`, `Measurement`, `MeasurementParser`, `ThresholdChecker`, `MarsLogger`. Shared by everyone.
-2. `server`: `MarsServer` (accept loop, `ExecutorService` with 5 threads, wiring in `main`) and `SensorHandler implements Runnable` (one sensor connection).
-3. `client`: `SensorClient` (sends a measurement every 5 seconds using `Random`).
-4. `logging`: `FileMarsLogger` (`BufferedWriter` with `FileWriter("mars.log", true)`).
-5. `parsing`: `SimpleParser`, `DefaultThresholdChecker`.
+1. `org.zealand.contract`: `SensorType`, `Measurement`, `MeasurementParser`, `ThresholdChecker`, `MarsLogger`. Shared by everyone.
+2. `org.zealand.server`: `MarsServer` (accept loop, `ExecutorService` with 5 threads, wiring in `main`) and `SensorHandler implements Runnable` (one sensor connection).
+3. `org.zealand.client`: `SensorClient` (sends a measurement every 5 seconds using `Random`).
+4. `org.zealand.logging`: `FileMarsLogger` (`BufferedWriter` with `FileWriter("mars.log", true)`).
+5. `org.zealand.parsing`: `SimpleParser`, `DefaultThresholdChecker`.
 
 `SensorHandler` only depends on the interfaces in `contract`, injected through the constructor.
 
