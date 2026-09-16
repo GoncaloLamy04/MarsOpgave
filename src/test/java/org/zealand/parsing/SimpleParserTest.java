@@ -97,4 +97,14 @@ class SimpleParserTest {
     void parse_tooManyParts_throwsIllegalArgument() {
         assertThrows(IllegalArgumentException.class, () -> parser.parse("TEMP:20:30"));
     }
+
+    @Test
+    void parse_nanValue_throwsIllegalArgument() {
+        assertThrows(IllegalArgumentException.class, () -> parser.parse("TEMP:NaN"));
+    }
+
+    @Test
+    void parse_infinityValue_throwsIllegalArgument() {
+        assertThrows(IllegalArgumentException.class, () -> parser.parse("CO2:Infinity"));
+    }
 }
