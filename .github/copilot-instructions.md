@@ -103,6 +103,7 @@ Quick test without a client: `nc localhost 5000`.
 6. On merge conflicts: stop and show both sides. Never accept theirs/ours blindly.
 7. If the branch, files or build look wrong: stop and report. Do not repair something you do not understand.
 8. Never commit `.idea/`, `target/` or `mars.log`.
+9. If a class from another issue is missing, use a small fake that implements the interface from `contract`. Never create the real class yourself.
 
 ## Working with the agent
 
