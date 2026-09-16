@@ -4,6 +4,10 @@ import org.zealand.contract.Measurement;
 import org.zealand.contract.MeasurementParser;
 import org.zealand.contract.SensorType;
 
+/**
+ * Omdanner sensorlinjer i formatet TYPE:værdi til en Measurement.
+ * Ugyldigt input giver IllegalArgumentException.
+ */
 public class SimpleParser implements MeasurementParser {
 
     private static final String SEPARATOR = ":";
@@ -22,7 +26,7 @@ public class SimpleParser implements MeasurementParser {
             throw new IllegalArgumentException("Input line cannot be null or empty");
         }
 
-        // -1 keeps empty parts, so "TEMP:" gives two parts instead of one
+        // -1 beholder tomme dele, så "TEMP:" giver to dele i stedet for én
         String[] parts = line.trim().split(SEPARATOR, -1);
         if (parts.length != EXPECTED_PARTS || parts[0].isEmpty() || parts[1].isEmpty()) {
             throw new IllegalArgumentException("Invalid format. Expected TYPE:value");
@@ -46,7 +50,7 @@ public class SimpleParser implements MeasurementParser {
             throw new IllegalArgumentException("Invalid numeric value: " + text, e);
         }
 
-        // NaN would never trigger an alarm, so non-finite values are rejected
+        // NaN udløser aldrig en alarm, så ikke-endelige værdier afvises
         if (!Double.isFinite(value)) {
             throw new IllegalArgumentException("Value must be a finite number: " + text);
         }

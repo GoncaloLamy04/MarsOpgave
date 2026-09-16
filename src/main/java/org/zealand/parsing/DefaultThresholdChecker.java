@@ -3,6 +3,10 @@ package org.zealand.parsing;
 import org.zealand.contract.Measurement;
 import org.zealand.contract.ThresholdChecker;
 
+/**
+ * Tjekker målinger mod koloniens sikkerhedsgrænser.
+ * Selve grænseværdierne er tilladt, kun værdier udenfor giver alarm.
+ */
 public class DefaultThresholdChecker implements ThresholdChecker {
 
     private static final double TEMP_MIN = -15;
@@ -25,7 +29,7 @@ public class DefaultThresholdChecker implements ThresholdChecker {
         };
     }
 
-    // Limits themselves are allowed, only values beyond them are out of range
+    // Grænseværdierne selv er tilladt, kun værdier udenfor giver alarm
     private boolean isOutside(double value, double min, double max) {
         return value < min || value > max;
     }
