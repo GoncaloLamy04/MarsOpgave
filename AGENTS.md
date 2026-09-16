@@ -72,7 +72,7 @@ Every message is logged with timestamp and sensor type:
 
 ## Code style
 
-1. All identifiers and comments in English. User facing messages follow the assignment text.
+1. Identifiers in English. Comments and commit messages may be in Danish. User facing messages follow the assignment text.
 2. Simple, readable code over clever solutions. The code must be explainable at the exam.
 3. Split code into small methods. KISS, no unnecessary complexity.
 
