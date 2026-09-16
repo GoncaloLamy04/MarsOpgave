@@ -10,11 +10,17 @@ Java 26 og Maven.
 
 ## Kør programmet
 
-TODO når server og klient er færdige
+### Server (Goncalo)
+TODO
+
+### Sensorklient (Mattias)
+TODO
 
 ## Kør tests
 
+```bash
 mvn test
+```
 
 ## Arkitektur
 
@@ -53,26 +59,44 @@ Grænseværdierne selv giver ikke alarm.
 
 ## Fejlhåndtering
 
-TODO: afbrudte klienter, ugyldige linjer, server ikke startet
+### Ugyldige linjer (Nicki)
+`SimpleParser` kaster `IllegalArgumentException` ved tomme linjer, forkert format, ukendt sensortype, tekst i stedet for tal samt `NaN` og `Infinity`.
+
+### Server og afbrudte klienter (Goncalo)
+TODO
+
+### Klient og logger (Mattias)
+TODO
 
 ## AI agent
 
-### Arbejdsgang
-Vi brugte Google Antigravity og GitHub Copilot. Regler til agenten ligger i `AGENTS.md`, og hver opgave fik struktur: opgave, kontekst, krav, hvad der ikke må ændres, og hvordan vi tester.
+### Fælles arbejdsgang
+Vi brugte Google Antigravity og GitHub Copilot. Regler til agenten ligger i `AGENTS.md`, og hver opgave fik struktur: opgave, kontekst, krav, hvad der ikke må ændres, og hvordan vi tester. Efter hver ændring læste vi diffen, kørte testene selv og tjekkede med `git status`, at kun de tilladte filer var ændret.
 
-### En opgave vi gav agenten
-Implementér `isOutOfRange` i `DefaultThresholdChecker`. Klassen fandtes allerede, og agenten måtte kun rette den ene metode.
+### Parser og grænseværdier (Nicki)
 
-### Hvorfor den var afgrænset sådan
-Testene var skrevet først (TDD), og agenten måtte ikke ændre dem eller `contract`. Så kunne den ikke få testene grønne ved at "snyde", og den kunne ikke ødelægge de andres arbejde.
+**Opgave til agenten:** Implementér `isOutOfRange` i `DefaultThresholdChecker`. Klassen fandtes allerede, og agenten måtte kun rette den ene metode.
 
-### Et forslag vi accepterede
-Switch expression over `SensorType` uden `default`. Tilføjes en ny sensortype, kompilerer koden ikke før den er håndteret, så man kan ikke glemme en.
+**Hvorfor afgrænset sådan:** Testene var skrevet først (TDD), og agenten måtte ikke ændre dem eller `contract`. Så kunne den ikke få testene grønne ved at "snyde", og den kunne ikke ødelægge de andres arbejde.
 
-### Et forslag vi ændrede eller afviste
-`SimpleParser` fra agenten bestod alle tests, men ved review fandt vi at `TEMP:NaN` slap igennem. NaN giver aldrig alarm, så en ugyldig måling ville blive godkendt stille. Vi skrev en test for det og rettede koden. Checkeren blev også refaktoreret bagefter med navngivne konstanter i stedet for magiske tal.
+**Accepteret:** Switch expression over `SensorType` uden `default`. Tilføjes en ny sensortype, kompilerer koden ikke før den er håndteret.
 
-### Sådan testede vi AI genereret kode
-Unit tests skrevet før koden, kørt selv i IntelliJ i stedet for kun at stole på agentens egen rapport. Vi læste diffen og tjekkede med `git status`, at kun de tilladte filer var ændret.
+**Ændret:** `SimpleParser` fra agenten bestod alle tests, men ved review fandt vi at `TEMP:NaN` slap igennem. NaN giver aldrig alarm, så en ugyldig måling ville blive godkendt stille. Vi skrev en test for det og rettede koden. Ved review med Claude blev begge klasser også refaktoreret med navngivne konstanter og små hjælpemetoder.
 
-TODO: noter fra server og klient/logger
+**Test:** 16 tests til checkeren og 13 til parseren, skrevet før koden. 7 checker tests var røde før implementeringen og alle grønne efter. Kørt i IntelliJ, ikke kun ud fra agentens egen rapport.
+
+### Server (Goncalo)
+
+**Opgave til agenten:** TODO
+**Hvorfor afgrænset sådan:** TODO
+**Accepteret:** TODO
+**Ændret eller afvist:** TODO
+**Test:** TODO
+
+### Sensorklient og logger (Mattias)
+
+**Opgave til agenten:** TODO
+**Hvorfor afgrænset sådan:** TODO
+**Accepteret:** TODO
+**Ændret eller afvist:** TODO
+**Test:** TODO
