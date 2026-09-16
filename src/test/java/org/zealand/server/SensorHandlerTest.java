@@ -2,8 +2,6 @@ package org.zealand.server;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.zealand.parsing.DefaultThresholdChecker;
-import org.zealand.parsing.SimpleParser;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
