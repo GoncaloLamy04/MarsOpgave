@@ -78,7 +78,7 @@ Every message is logged with timestamp and sensor type:
 
 ## Tests
 
-Follow `unit-test-guide.md` (AAA, naming `method_scenario_expectedResult`, one thing per test).
+Follow `docs/unit-test-guide.md` (AAA, naming `method_scenario_expectedResult`, one thing per test).
 
 Manual tests as a minimum:
 
