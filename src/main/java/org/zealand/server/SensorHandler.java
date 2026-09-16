@@ -70,7 +70,7 @@ public class SensorHandler implements Runnable {
             }
 
             if (alarm) {
-                String msg = String.format("ALARM: [%s] value out of range! (value = %s)", m.type(), m.value());
+                String msg = String.format("ALARM: %s value out of range! (value = %s)", m.type(), m.value());
                 out.println(msg);
                 System.out.println("[ALARM] Sensor " + sensorId + " -> " + msg);
             } else {
