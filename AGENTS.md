@@ -1,4 +1,4 @@
-﻿# Agent Instructions: Marsbase Monitoring
+# Agent Instructions: Marsbase Monitoring
 
 This is a group assignment in Programmering 2. The goal is not only working code, but also using an AI agent systematically: Understand → Plan → Implement → Test → Review → Improve → Explain.
 
@@ -72,7 +72,7 @@ Every message is logged with timestamp and sensor type:
 
 ## Code style
 
-1. All identifiers and comments in English. User facing messages follow the assignment text.
+1. Identifiers in English. Comments and commit messages may be in Danish. User facing messages follow the assignment text.
 2. Simple, readable code over clever solutions. The code must be explainable at the exam.
 3. Split code into small methods. KISS, no unnecessary complexity.
 
@@ -103,6 +103,7 @@ Quick test without a client: `nc localhost 5000`.
 6. On merge conflicts: stop and show both sides. Never accept theirs/ours blindly.
 7. If the branch, files or build look wrong: stop and report. Do not repair something you do not understand.
 8. Never commit `.idea/`, `target/` or `mars.log`.
+9. If a class from another issue is missing, use a small fake that implements the interface from `contract`. Never create the real class yourself.
 
 ## Working with the agent
 
