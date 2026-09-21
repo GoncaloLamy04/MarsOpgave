@@ -305,3 +305,15 @@ AI: Copilot implementerede begge klasser ud fra tests og trinvise prompts. [skri
 Ret `[antal]` og AI-linjen til det der faktisk skete hos dig. Send linket i Discord.
 
 Husk også: gå ind på issue #1 og sæt flueben på de punkter du rent faktisk har opfyldt, før du sender PR'en.
+
+## README
+
+Skriv din egen del i README's AI-sektion, samme sted som Nicki og Goncalos afsnit. Ligger i `readme` branchen (`git fetch`, `git switch readme`, `git pull`), og skal indeholde:
+
+1. En opgave du gav agenten (en af prompterne herover er fint)
+2. Hvorfor den var afgrænset sådan
+3. Et forslag du accepterede
+4. Et forslag du ændrede eller afviste, hvis der var noget
+5. Hvordan du testede det (loggerens tests, klientens manuelle test)
+
+Commit og push på `readme`, ikke på `client_logger`.
