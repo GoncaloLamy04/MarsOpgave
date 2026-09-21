@@ -303,3 +303,5 @@ AI: Copilot implementerede begge klasser ud fra tests og trinvise prompts. [skri
 ```
 
 Ret `[antal]` og AI-linjen til det der faktisk skete hos dig. Send linket i Discord.
+
+Husk også: gå ind på issue #1 og sæt flueben på de punkter du rent faktisk har opfyldt, før du sender PR'en.
