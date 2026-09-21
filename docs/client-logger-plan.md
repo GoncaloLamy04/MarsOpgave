@@ -289,4 +289,17 @@ Forslag til besked: `Tilføj fejlhåndtering til SensorClient ved manglende serv
 
 ## Til sidst
 
-Lav PR med `Closes #1` i beskrivelsen. Send linket i Discord.
+Lav PR med `Closes #1` i beskrivelsen. Brug fx denne skabelon:
+
+```
+Closes #1
+
+FileMarsLogger: skriver til mars.log med timestamp, alarm-markering og error-beskeder.
+SensorClient: sender en tilfældig måling hvert 5. sekund og printer serverens svar. Fejler pænt hvis serveren ikke kører.
+
+Tests: [antal] tests til FileMarsLogger, alle grønne. Klienten testet manuelt mod den kørende server.
+
+AI: Copilot implementerede begge klasser ud fra tests og trinvise prompts. [skriv om noget blev rettet eller accepteret undervejs, fx: agenten glemte først try-with-resources, det fik vi rettet / vi accepterede formatet den foreslog uden ændringer]
+```
+
+Ret `[antal]` og AI-linjen til det der faktisk skete hos dig. Send linket i Discord.
