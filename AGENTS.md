@@ -75,6 +75,7 @@ Every message is logged with timestamp and sensor type:
 1. Identifiers in English. Comments and commit messages may be in Danish. User facing messages follow the assignment text.
 2. Simple, readable code over clever solutions. The code must be explainable at the exam.
 3. Split code into small methods. KISS, no unnecessary complexity.
+4. Public classes and methods use Javadoc comments (/** ... */), so a Javadoc reference can be generated from the code.
 
 ## Tests
 
