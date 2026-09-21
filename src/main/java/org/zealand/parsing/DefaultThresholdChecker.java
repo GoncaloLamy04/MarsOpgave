@@ -17,6 +17,12 @@ public class DefaultThresholdChecker implements ThresholdChecker {
     private static final double PRESSURE_MAX = 1100;
     private static final double CO2_MAX = 2000;
 
+    /**
+     * Tjekker om en måling er uden for de tilladte grænser.
+     *
+     * @param measurement målingen der skal tjekkes
+     * @return true hvis værdien er uden for grænsen for dens sensortype
+     */
     @Override
     public boolean isOutOfRange(Measurement measurement) {
         double value = measurement.value();

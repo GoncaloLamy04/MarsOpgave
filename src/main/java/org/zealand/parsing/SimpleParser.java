@@ -13,6 +13,13 @@ public class SimpleParser implements MeasurementParser {
     private static final String SEPARATOR = ":";
     private static final int EXPECTED_PARTS = 2;
 
+    /**
+     * Omdanner en linje i formatet TYPE:værdi til en Measurement.
+     *
+     * @param line linjen der skal parses, fx "TEMP:27.4"
+     * @return den parsede måling
+     * @throws IllegalArgumentException hvis linjen er ugyldig
+     */
     @Override
     public Measurement parse(String line) {
         String[] parts = splitLine(line);
