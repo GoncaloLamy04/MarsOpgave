@@ -25,6 +25,9 @@ public class SensorDashboard extends JFrame {
 
     private final ThresholdChecker checker = new DefaultThresholdChecker();
 
+    /**
+     * Opretter og opsætter dashboard-vinduet med testdata.
+     */
     public SensorDashboard() {
         setTitle("Marsbase Sensor Dashboard");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,6 +88,11 @@ public class SensorDashboard extends JFrame {
         };
     }
 
+    /**
+     * Starter dashboardet i et eget vindue.
+     *
+     * @param args ikke brugt
+     */
     public static void main(String[] args) {
         // Swing komponenter skal oprettes på Event Dispatch Thread
         SwingUtilities.invokeLater(() -> new SensorDashboard().setVisible(true));
