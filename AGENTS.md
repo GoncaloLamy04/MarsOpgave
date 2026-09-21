@@ -76,6 +76,7 @@ Every message is logged with timestamp and sensor type:
 2. Simple, readable code over clever solutions. The code must be explainable at the exam.
 3. Split code into small methods. KISS, no unnecessary complexity.
 4. Public classes and methods use Javadoc comments (/** ... */), so a Javadoc reference can be generated from the code.
+5. Dependency injection via constructor: classes receive their dependencies (interfaces from contract) through the constructor, never instantiate them internally.
 
 ## Tests
 
