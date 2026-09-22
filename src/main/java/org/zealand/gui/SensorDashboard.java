@@ -23,12 +23,15 @@ public class SensorDashboard extends JFrame {
     private static final String OK = "OK";
     private static final Color ALARM_COLOR = new Color(255, 102, 102);
 
-    private final ThresholdChecker checker = new DefaultThresholdChecker();
+    private final ThresholdChecker checker;
 
     /**
      * Opretter og opsætter dashboard-vinduet med testdata.
+     *
+     * @param checker threshold checker til validering af målinger mod grænseværdier
      */
-    public SensorDashboard() {
+    public SensorDashboard(ThresholdChecker checker) {
+        this.checker = checker;
         setTitle("Marsbase Sensor Dashboard");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 200);
@@ -94,7 +97,8 @@ public class SensorDashboard extends JFrame {
      * @param args ikke brugt
      */
     public static void main(String[] args) {
+        ThresholdChecker checker = new DefaultThresholdChecker();
         // Swing komponenter skal oprettes på Event Dispatch Thread
-        SwingUtilities.invokeLater(() -> new SensorDashboard().setVisible(true));
+        SwingUtilities.invokeLater(() -> new SensorDashboard(checker).setVisible(true));
     }
 }
