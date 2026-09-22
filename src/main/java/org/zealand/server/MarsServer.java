@@ -51,7 +51,7 @@ public class MarsServer {
                     Socket client = serverSocket.accept();
                     System.out.println("[INFO] Accepted connection from " + client.getRemoteSocketAddress());
 
-                    // inject a parser into each handler (parsing is stateless) (parser created once and shared)
+                    // Parser is stateless and shared across all handlers
 
                     SensorHandler handler = new SensorHandler(client, nextSensorId++, parser, checker, logger);
                     executor.submit(handler);
