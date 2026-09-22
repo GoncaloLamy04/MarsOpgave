@@ -41,8 +41,10 @@ public class SensorClient {
                 System.out.println("Reply: " + in.readLine());
             } catch (ConnectException e) {
                 System.out.println("Could not connect to Mars server on localhost:5000");
+                return;
             } catch (IOException e) {
                 System.out.println("I/O error: " + e.getMessage());
+                return;
             }
 
             Thread.sleep(5000);
