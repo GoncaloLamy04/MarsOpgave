@@ -4,7 +4,21 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Simple entry point for the Mars HQ server.
+ *
+ * <p>The server listens on port 5000, accepts sensor connections and
+ * dispatches each connection to a {@link org.zealand.server.SensorHandler}
+ * running in a fixed thread pool. A single shared {@code ThresholdChecker}
+ * and a simple console {@code MarsLogger} are created and injected into
+ * each handler.</p>
+ */
 public class MarsServer {
+    /**
+     * Main method that starts the server.
+     *
+     * @param args command line arguments (ignored)
+     */
     public static void main(String[] args) {
         final int port = 5000;
         System.out.println("[INFO] Starting MarsServer on port " + port);
@@ -29,13 +43,15 @@ public class MarsServer {
                 }
             };
 
+            // create a single shared parser (stateless) to reuse across handlers
+            org.zealand.parsing.SimpleParser parser = new org.zealand.parsing.SimpleParser();
+
             try {
                 while (true) {
                     Socket client = serverSocket.accept();
                     System.out.println("[INFO] Accepted connection from " + client.getRemoteSocketAddress());
 
-                    // inject a parser into each handler (parsing is stateless)
-                    org.zealand.parsing.SimpleParser parser = new org.zealand.parsing.SimpleParser();
+                    // inject a parser into each handler (parsing is stateless) (parser created once and shared)
 
                     SensorHandler handler = new SensorHandler(client, nextSensorId++, parser, checker, logger);
                     executor.submit(handler);
