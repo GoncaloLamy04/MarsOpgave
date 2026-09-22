@@ -126,11 +126,11 @@ Vi brugte Google Antigravity og GitHub Copilot. Regler til agenten ligger i `AGE
 
 ### Sensorklient og logger (Mattias)
 
-**Opgave til agenten:** Den skulle implementere `SensorClient` og `FileMarsLogger` og ingen af klasserne fandets i forvejen.
+**Opgave til agenten:** Den skulle implementere `SensorClient` og `FileMarsLogger` og ingen af klasserne fandtes i forvejen.
 **Hvorfor afgrænset sådan:** Test blev skrevet før agenten blev promptet, så den kunne ikke snyde sig til grønne tests. Den måtte heller ikke ændre `contract`.
-**Accepteret:** Accepteret måden den opstilte klienten på, med en `while`-løkke der sender målinger hvert 5. sekund. Loggeren blev implementeret som en singleton, så alle klienter deler den samme instans.
-**Ændret eller afvist:** Ændret at man skulle vælge sensor før sensorclienten startet da agentet kørte det uden et par gange før den forstod min prompt.
-**Test:** 4 test blev kørt 2 af dem var røde før implementeringen og alle grønne efter. Kørt i IntelliJ, ikke kun ud fra agentens egen rapport.
+**Accepteret:** Accepteret måden den opstillede klienten på, med en `while`-løkke der sender målinger hvert 5. sekund. Loggeren deles via dependency injection, samme instans injiceret i alle handlers.
+**Ændret eller afvist:** Ændret at man skulle vælge sensor før SensorClient startede, da agenten kørte det uden et par gange før den forstod prompten.
+**Test:** 4 tests blev kørt, 2 af dem var røde før implementeringen og alle grønne efter. Kørt i IntelliJ, ikke kun ud fra agentens egen rapport.
 
 ### Review af hele systemet
 
