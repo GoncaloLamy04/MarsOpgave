@@ -28,20 +28,9 @@ public class MarsServer {
 
             java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(5);
             int nextSensorId = 1;
-            // create a single shared threshold checker and a simple console logger (temporary)
+            // create a single shared threshold checker and a simple console logger (FileMarsLogger)
             org.zealand.parsing.DefaultThresholdChecker checker = new org.zealand.parsing.DefaultThresholdChecker();
-            org.zealand.contract.MarsLogger logger = new org.zealand.contract.MarsLogger() {
-                @Override
-                public void log(org.zealand.contract.Measurement measurement, boolean alarm) {
-                    String msg = String.format("[LOG] %s: %s%s", measurement.type(), measurement.value(), alarm ? " -> ALARM!" : "");
-                    System.out.println(msg);
-                }
-
-                @Override
-                public void error(String message) {
-                    System.err.println("[LOG ERROR] " + message);
-                }
-            };
+            org.zealand.contract.MarsLogger logger = new org.zealand.logging.FileMarsLogger("mars.log");
 
             // create a single shared parser (stateless) to reuse across handlers
             org.zealand.parsing.SimpleParser parser = new org.zealand.parsing.SimpleParser();
