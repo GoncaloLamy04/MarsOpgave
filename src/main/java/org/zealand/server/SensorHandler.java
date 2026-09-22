@@ -10,8 +10,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SensorHandler implements Runnable {
+    private static final DateTimeFormatter TIMESTAMP_FORMATTER =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     private final Socket socket;
     private final int sensorId;
     private final MeasurementParser parser;
@@ -38,19 +43,19 @@ public class SensorHandler implements Runnable {
             }
 
             // readLine returned null => client closed connection; report and log
-            System.err.println("[ERROR] Sensor " + sensorId + " mistede forbindelsen.");
+            System.err.println("[" + timestamp() + "] [ERROR] Sensor " + sensorId + " mistede forbindelsen.");
             try {
                 logger.error("Sensor " + sensorId + " disconnected (EOF)");
             } catch (Exception logEx) {
-                System.err.println("[LOG ERROR] " + logEx.getMessage());
+                System.err.println("[" + timestamp() + "] [LOG ERROR] " + logEx.getMessage());
             }
 
         } catch (IOException e) {
-            System.err.println("[ERROR] Sensor " + sensorId + " mistede forbindelsen.");
+            System.err.println("[" + timestamp() + "] [ERROR] Sensor " + sensorId + " mistede forbindelsen.");
             try {
                 logger.error("Sensor " + sensorId + " disconnected: " + e.getMessage());
             } catch (Exception logEx) {
-                System.err.println("[LOG ERROR] " + logEx.getMessage());
+                System.err.println("[" + timestamp() + "] [LOG ERROR] " + logEx.getMessage());
             }
         }
     }
@@ -81,12 +86,16 @@ public class SensorHandler implements Runnable {
         } catch (IllegalArgumentException ex) {
             String err = "ERROR|" + ex.getMessage();
             out.println(err);
-            System.err.println("[ERROR] Sensor " + sensorId + " sent bad line: " + ex.getMessage());
+            System.err.println("[" + timestamp() + "] [ERROR] Sensor " + sensorId + " sent bad line: " + ex.getMessage());
             try {
                 logger.error("Sensor " + sensorId + " bad line: " + ex.getMessage());
             } catch (Exception logEx) {
-                System.err.println("[LOG ERROR] " + logEx.getMessage());
+                System.err.println("[" + timestamp() + "] [LOG ERROR] " + logEx.getMessage());
             }
         }
+    }
+
+    private static String timestamp() {
+        return LocalDateTime.now().format(TIMESTAMP_FORMATTER);
     }
 }
