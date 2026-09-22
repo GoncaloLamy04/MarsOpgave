@@ -12,10 +12,12 @@ import java.util.Random;
  * Sends random measurements to the Mars server every five seconds and prints the reply.
  */
 public class SensorClient {
-    public static void main(String[] args) throws InterruptedException {
-        String sensorType = args.length > 0 ? args[0] : "TEMP";
-        if (args.length == 0) {
-            System.out.println("No sensor type provided; defaulting to TEMP");
+    public static void main(String[] args) throws InterruptedException, IOException {
+        String sensorType = args.length > 0 ? args[0].toUpperCase() : promptForSensorType();
+
+        if (!isValidSensorType(sensorType)) {
+            System.out.println("Invalid sensor type: " + sensorType + ". Use TEMP, O2, PRESSURE or CO2.");
+            return;
         }
 
         Random random = new Random();
@@ -50,5 +52,18 @@ public class SensorClient {
 
             Thread.sleep(5000);
         }
+    }
+
+    private static String promptForSensorType() throws IOException {
+        System.out.println("Choose sensor type: TEMP, O2, PRESSURE, CO2");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        return reader.readLine().trim().toUpperCase();
+    }
+
+    private static boolean isValidSensorType(String sensorType) {
+        return switch (sensorType) {
+            case "TEMP", "O2", "PRESSURE", "CO2" -> true;
+            default -> false;
+        };
     }
 }
