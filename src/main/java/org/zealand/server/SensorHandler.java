@@ -11,6 +11,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * Handles a single sensor connection.
+ *
+ * <p>Each handler reads lines from the socket, parses measurements, checks
+ * thresholds, logs the measurement and sends a response to the client.</p>
+ */
 public class SensorHandler implements Runnable {
     private final Socket socket;
     private final int sensorId;
@@ -18,6 +24,15 @@ public class SensorHandler implements Runnable {
     private final ThresholdChecker checker;
     private final MarsLogger logger;
 
+    /**
+     * Create a handler for a sensor connection.
+     *
+     * @param socket   socket connected to the sensor client
+     * @param sensorId numerical id assigned to this sensor (for logging)
+     * @param parser   parser used to convert incoming lines to {@link Measurement}
+     * @param checker  threshold checker used to determine alarms
+     * @param logger   logger to record measurements and errors (shared across threads)
+     */
     public SensorHandler(Socket socket, int sensorId, MeasurementParser parser, ThresholdChecker checker, MarsLogger logger) {
         this.socket = socket;
         this.sensorId = sensorId;
@@ -26,6 +41,11 @@ public class SensorHandler implements Runnable {
         this.logger = logger;
     }
 
+    /**
+     * Continuously reads lines from the sensor socket until the client closes the
+     * connection or an I/O error occurs. Each received line is delegated to
+     * {@link #handleLine(String, java.io.PrintWriter)} for processing.
+     */
     @Override
     public void run() {
         try (Socket s = socket;
@@ -38,24 +58,42 @@ public class SensorHandler implements Runnable {
             }
 
             // readLine returned null => client closed connection; report and log
-            System.err.println("[ERROR] Sensor " + sensorId + " mistede forbindelsen.");
-            try {
-                logger.error("Sensor " + sensorId + " disconnected (EOF)");
-            } catch (Exception logEx) {
-                System.err.println("[LOG ERROR] " + logEx.getMessage());
-            }
+            reportDisconnect("disconnected (EOF)");
 
         } catch (IOException e) {
-            System.err.println("[ERROR] Sensor " + sensorId + " mistede forbindelsen.");
-            try {
-                logger.error("Sensor " + sensorId + " disconnected: " + e.getMessage());
-            } catch (Exception logEx) {
-                System.err.println("[LOG ERROR] " + logEx.getMessage());
-            }
+            reportDisconnect("disconnected: " + e.getMessage());
         }
     }
 
-    // Extracted for testing: process a single line and reply via the given PrintWriter.
+    /**
+     * Helper to report a sensor disconnect: prints a standard error message and
+     * forwards a descriptive message to the shared logger. Centralizing the
+     * logic prevents duplicated code paths for EOF and I/O error handling.
+     *
+     * @param detail detail string appended to the logger message (e.g. "disconnected (EOF)")
+     */
+    private void reportDisconnect(String detail) {
+        System.err.println("[ERROR] Sensor " + sensorId + " mistede forbindelsen.");
+        try {
+            logger.error("Sensor " + sensorId + " " + detail);
+        } catch (Exception logEx) {
+            System.err.println("[LOG ERROR] " + logEx.getMessage());
+        }
+    }
+
+    /**
+     * Process a single incoming line from the sensor and reply to the client.
+     *
+     * <p>The method parses the given line into a {@link Measurement}, checks if
+     * the measurement is out of range and logs the result. If the measurement
+     * is out of range an alarm message is sent to the client, otherwise "OK"
+     * is sent. If parsing fails an error message is returned to the client.
+     * </p>
+     *
+     * @param line the raw line received from the sensor client (e.g. "TEMP:27.4")
+     * @param out  writer to send a single-line response back to the client
+     * @throws IllegalArgumentException if the line cannot be parsed into a measurement
+     */
     public void handleLine(String line, PrintWriter out) {
         try {
             Measurement m = parser.parse(line);
