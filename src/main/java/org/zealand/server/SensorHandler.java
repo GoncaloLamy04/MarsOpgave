@@ -8,8 +8,10 @@ import org.zealand.contract.MarsLogger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Handles a single sensor connection.
@@ -49,8 +51,8 @@ public class SensorHandler implements Runnable {
     @Override
     public void run() {
         try (Socket s = socket;
-             BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-             PrintWriter out = new PrintWriter(s.getOutputStream(), true)) {
+             BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream(), StandardCharsets.UTF_8));
+             PrintWriter out = new PrintWriter(new OutputStreamWriter(s.getOutputStream(), StandardCharsets.UTF_8), true)) {
 
             String line;
             while ((line = in.readLine()) != null) {

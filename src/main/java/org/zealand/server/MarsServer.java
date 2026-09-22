@@ -43,7 +43,7 @@ public class MarsServer {
                 }
             };
 
-            // create a single shared parser (stateless) to reuse across handlers
+            // Parser is stateless and shared across all handlers
             org.zealand.parsing.SimpleParser parser = new org.zealand.parsing.SimpleParser();
 
             try {
