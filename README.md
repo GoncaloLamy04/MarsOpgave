@@ -80,7 +80,6 @@ Tre klienter forbundet samtidig blev håndteret parallelt af trådpoolen.
 `SimpleParser` kaster `IllegalArgumentException` ved tomme linjer, forkert format, ukendt sensortype, tekst i stedet for tal samt `NaN` og `Infinity`.
 
 ### Server og afbrudte klienter (Goncalo)
-TODO
 
 ### Klient og logger (Mattias)
 TODO
@@ -104,11 +103,11 @@ Vi brugte Google Antigravity og GitHub Copilot. Regler til agenten ligger i `AGE
 
 ### Server (Goncalo)
 
-**Opgave til agenten:** TODO
-**Hvorfor afgrænset sådan:** TODO
-**Accepteret:** TODO
-**Ændret eller afvist:** TODO
-**Test:** TODO
+**Opgave til agenten:** Vi gav agenten en opgave om at overskrive vores test logger med vores rigtig FileMarsLogger, så systemet kunne virke efter vi alle merget vores issues.
+**Hvorfor afgrænset sådan:** Instruktionerne var afgrænset til at den ikke skulle ændre noget logik, den skulle følge copilot.instruction.md filen og får erstattet testlogger med FileMarsLogger.
+**Accepteret:** Et forslag vi accepterede var uni-test med en fakelogger og en testlogger i MarsServer, så vi kunne teste programmet
+**Ændret eller afvist:** Et forslag som vi ændrede var at dele SensorHandler klassen i to metoder, fordi copilot havde lavet et langt metode, som sagtens kunne deles op både for Clean Code og testning af programmet.
+**Test:** 16 test til checkeren, 11 test til parseren og 3 test til sensorhandleren som blev kørt før hele koden blev implementeret. Tests blev tjekket med mvn test i terminalen.
 
 ### Sensorklient og logger (Mattias)
 
