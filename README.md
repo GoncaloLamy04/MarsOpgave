@@ -11,7 +11,13 @@ Java 17 eller nyere og Maven.
 ## Kør programmet
 
 ### Server (Goncalo)
-TODO
+I IntelliJ: åbn `MarsServer.java` og tryk på den grønne pil ved `main`-metoden, eller højreklik på filen → **Run 'MarsServer.main()'**.
+
+Eller fra terminalen:
+```bash
+mvn compile
+mvn exec:java -Dexec.mainClass=org.zealand.server.MarsServer
+```
 
 ### Sensorklient (Mattias)
 TODO
@@ -59,6 +65,15 @@ Grænseværdierne selv giver ikke alarm.
 
 ## Fejlhåndtering
 
+### Ugyldige linjer (Nicki)
+`SimpleParser` kaster `IllegalArgumentException` ved tomme linjer, forkert format, ukendt sensortype, tekst i stedet for tal samt `NaN` og `Infinity`.
+
+### Server og afbrudte klienter (Goncalo)
+TODO
+
+### Klient og logger (Mattias)
+TODO
+
 ## Manuel test af serveren
 
 Uden færdig klient testede vi serveren med en lille PowerShell TCP klient, der sendte:
@@ -69,21 +84,12 @@ Uden færdig klient testede vi serveren med en lille PowerShell TCP klient, der 
 | `TEMP:40` | `ALARM: TEMP value out of range! (value = 40.0)` |
 | `O2:18` | `ALARM: O2 value out of range! (value = 18.0)` |
 | `CO2:2500` | `ALARM: CO2 value out of range! (value = 2500.0)` |
-| `CO2:abc` | `ERROR\|Invalid numeric value: abc` |
-| `HUMIDITY:50` | `ERROR\|Unknown sensor type: HUMIDITY` |
-| `TEMP:NaN` | `ERROR\|Value must be a finite number: NaN` |
+| `CO2:abc` | `ERROR|Invalid numeric value: abc` |
+| `HUMIDITY:50` | `ERROR|Unknown sensor type: HUMIDITY` |
+| `TEMP:NaN` | `ERROR|Value must be a finite number: NaN` |
 
 Serveren fortsatte efter ugyldige linjer, og ved afbrydelse skrev den `[ERROR] Sensor 1 mistede forbindelsen.`
 Tre klienter forbundet samtidig blev håndteret parallelt af trådpoolen.
-
-### Ugyldige linjer (Nicki)
-`SimpleParser` kaster `IllegalArgumentException` ved tomme linjer, forkert format, ukendt sensortype, tekst i stedet for tal samt `NaN` og `Infinity`.
-
-### Server og afbrudte klienter (Goncalo)
-TODO
-
-### Klient og logger (Mattias)
-TODO
 
 ## AI agent
 
