@@ -5,17 +5,18 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Simple entry point for the Mars HQ server.
+ * Entry point for the Mars HQ server.
  *
  * <p>The server listens on port 5000, accepts sensor connections and
  * dispatches each connection to a {@link org.zealand.server.SensorHandler}
- * running in a fixed thread pool. A single shared {@code ThresholdChecker}
- * and a simple console {@code MarsLogger} are created and injected into
- * each handler.</p>
+ * running in a fixed thread pool. A single shared {@code ThresholdChecker},
+ * {@code MarsLogger} and {@code MeasurementParser} are created and injected
+ * into each handler.</p>
  */
 public class MarsServer {
+
     /**
-     * Main method that starts the server.
+     * Starts the Mars HQ server.
      *
      * @param args command line arguments (ignored)
      */
@@ -28,19 +29,16 @@ public class MarsServer {
 
             java.util.concurrent.ExecutorService executor = java.util.concurrent.Executors.newFixedThreadPool(5);
             int nextSensorId = 1;
-            // create a single shared threshold checker and a simple console logger (FileMarsLogger)
+
+            // Create shared dependencies injected into each handler
             org.zealand.parsing.DefaultThresholdChecker checker = new org.zealand.parsing.DefaultThresholdChecker();
             org.zealand.contract.MarsLogger logger = new org.zealand.logging.FileMarsLogger("mars.log");
-
-            // create a single shared parser (stateless) to reuse across handlers
             org.zealand.parsing.SimpleParser parser = new org.zealand.parsing.SimpleParser();
 
             try {
                 while (true) {
                     Socket client = serverSocket.accept();
                     System.out.println("[INFO] Accepted connection from " + client.getRemoteSocketAddress());
-
-                    // Parser is stateless and shared across all handlers
 
                     SensorHandler handler = new SensorHandler(client, nextSensorId++, parser, checker, logger);
                     executor.submit(handler);

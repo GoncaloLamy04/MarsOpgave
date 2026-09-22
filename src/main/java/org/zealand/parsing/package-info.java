@@ -1,2 +1,4 @@
-/** Issue #3: SimpleParser and DefaultThresholdChecker. */
+/**
+ * Parsing and threshold checking implementations for sensor measurements.
+ */
 package org.zealand.parsing;

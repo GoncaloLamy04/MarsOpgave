@@ -27,7 +27,7 @@ public class SensorHandler implements Runnable {
     private final MarsLogger logger;
 
     /**
-     * Create a handler for a sensor connection.
+     * Creates a handler for a sensor connection.
      *
      * @param socket   socket connected to the sensor client
      * @param sensorId numerical id assigned to this sensor (for logging)
@@ -84,7 +84,7 @@ public class SensorHandler implements Runnable {
     }
 
     /**
-     * Process a single incoming line from the sensor and reply to the client.
+     * Processes a single incoming line from the sensor and replies to the client.
      *
      * <p>The method parses the given line into a {@link Measurement}, checks if
      * the measurement is out of range and logs the result. If the measurement
@@ -94,7 +94,6 @@ public class SensorHandler implements Runnable {
      *
      * @param line the raw line received from the sensor client (e.g. "TEMP:27.4")
      * @param out  writer to send a single-line response back to the client
-     * @throws IllegalArgumentException if the line cannot be parsed into a measurement
      */
     public void handleLine(String line, PrintWriter out) {
         try {

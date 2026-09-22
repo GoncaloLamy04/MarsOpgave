@@ -1,2 +1,4 @@
-/** Issue #2: MarsServer and SensorHandler. */
+/**
+ * Server and connection handling components for the Mars base server.
+ */
 package org.zealand.server;

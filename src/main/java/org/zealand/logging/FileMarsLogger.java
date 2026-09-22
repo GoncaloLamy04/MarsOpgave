@@ -27,6 +27,12 @@ public class FileMarsLogger implements MarsLogger {
         this.filePath = filePath;
     }
 
+    /**
+     * Logs a measurement entry with a timestamp to the file.
+     *
+     * @param measurement the measurement to log
+     * @param alarm       true if the measurement triggered an alarm, false otherwise
+     */
     @Override
     public synchronized void log(Measurement measurement, boolean alarm) {
         String line = String.format("[%s] %s: %s%s",
@@ -43,6 +49,11 @@ public class FileMarsLogger implements MarsLogger {
         }
     }
 
+    /**
+     * Logs an error message with a timestamp to the file.
+     *
+     * @param message the error message to log
+     */
     @Override
     public synchronized void error(String message) {
         String line = String.format("[%s] ERROR: %s",

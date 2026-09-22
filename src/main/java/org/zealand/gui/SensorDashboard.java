@@ -12,8 +12,8 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * Simpelt Swing dashboard der viser sensorernes seneste værdi og status.
- * Bruger faste testdata indtil serveren kan levere live data.
+ * Simple Swing dashboard displaying the latest sensor values and alarm statuses.
+ * Uses fixed test data until live data from the server is connected.
  */
 public class SensorDashboard extends JFrame {
 
@@ -26,9 +26,9 @@ public class SensorDashboard extends JFrame {
     private final ThresholdChecker checker;
 
     /**
-     * Opretter og opsætter dashboard-vinduet med testdata.
+     * Creates and initializes the dashboard window with test data.
      *
-     * @param checker threshold checker til validering af målinger mod grænseværdier
+     * @param checker threshold checker for validating measurements against limits
      */
     public SensorDashboard(ThresholdChecker checker) {
         this.checker = checker;
@@ -45,7 +45,7 @@ public class SensorDashboard extends JFrame {
         add(new JScrollPane(table));
     }
 
-    // Tabelmodel hvor brugeren ikke kan redigere cellerne
+    // Table model where user cannot edit cells
     private DefaultTableModel createReadOnlyModel() {
         return new DefaultTableModel(COLUMNS, 0) {
             @Override
@@ -55,7 +55,7 @@ public class SensorDashboard extends JFrame {
         };
     }
 
-    // Faste målinger, én af hver sensortype
+    // Fixed measurements, one for each sensor type
     private List<Measurement> testData() {
         return List.of(
                 new Measurement(SensorType.TEMP, 20),
@@ -65,7 +65,7 @@ public class SensorDashboard extends JFrame {
         );
     }
 
-    // Tilføjer en række pr. måling med status beregnet af checkeren
+    // Adds a row per measurement with status evaluated by the checker
     private void addMeasurements(DefaultTableModel model, List<Measurement> measurements) {
         for (Measurement m : measurements) {
             String status = checker.isOutOfRange(m) ? ALARM : OK;
@@ -73,7 +73,7 @@ public class SensorDashboard extends JFrame {
         }
     }
 
-    // Farver rækker med alarm røde, men beholder markeringsfarven for valgte rækker
+    // Highlights alarm rows in red, preserving selection colors for focused rows
     private DefaultTableCellRenderer createAlarmRenderer() {
         return new DefaultTableCellRenderer() {
             @Override
@@ -92,13 +92,13 @@ public class SensorDashboard extends JFrame {
     }
 
     /**
-     * Starter dashboardet i et eget vindue.
+     * Starts the dashboard in its own window.
      *
-     * @param args ikke brugt
+     * @param args command line arguments (ignored)
      */
     public static void main(String[] args) {
         ThresholdChecker checker = new DefaultThresholdChecker();
-        // Swing komponenter skal oprettes på Event Dispatch Thread
+        // Swing components must be initialized on the Event Dispatch Thread
         SwingUtilities.invokeLater(() -> new SensorDashboard(checker).setVisible(true));
     }
 }

@@ -1,3 +1,15 @@
 package org.zealand.contract;
 
-public enum SensorType { TEMP, O2, PRESSURE, CO2 }
+/**
+ * Supported sensor types on the Mars base.
+ */
+public enum SensorType {
+    /** Temperature sensor. */
+    TEMP,
+    /** Oxygen level sensor. */
+    O2,
+    /** Atmospheric pressure sensor. */
+    PRESSURE,
+    /** Carbon dioxide level sensor. */
+    CO2
+}

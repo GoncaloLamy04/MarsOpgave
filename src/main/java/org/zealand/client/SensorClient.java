@@ -12,6 +12,14 @@ import java.util.Random;
  * Sends random measurements to the Mars server every five seconds and prints the reply.
  */
 public class SensorClient {
+
+    /**
+     * Starts the sensor client.
+     *
+     * @param args command line arguments; optional sensor type (TEMP, O2, PRESSURE, CO2)
+     * @throws InterruptedException if thread sleeping is interrupted
+     * @throws IOException          if an I/O error occurs when reading from standard input
+     */
     public static void main(String[] args) throws InterruptedException, IOException {
         String sensorType = args.length > 0 ? args[0].toUpperCase() : promptForSensorType();
 

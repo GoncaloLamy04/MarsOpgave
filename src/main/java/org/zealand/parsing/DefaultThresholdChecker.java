@@ -4,8 +4,8 @@ import org.zealand.contract.Measurement;
 import org.zealand.contract.ThresholdChecker;
 
 /**
- * Tjekker målinger mod koloniens sikkerhedsgrænser.
- * Selve grænseværdierne er tilladt, kun værdier udenfor giver alarm.
+ * Checks measurements against colony safety thresholds.
+ * The boundary values themselves are permitted; only values strictly outside trigger alarms.
  */
 public class DefaultThresholdChecker implements ThresholdChecker {
 
@@ -18,10 +18,10 @@ public class DefaultThresholdChecker implements ThresholdChecker {
     private static final double CO2_MAX = 2000;
 
     /**
-     * Tjekker om en måling er uden for de tilladte grænser.
+     * Checks whether a measurement is outside permitted thresholds.
      *
-     * @param measurement målingen der skal tjekkes
-     * @return true hvis værdien er uden for grænsen for dens sensortype
+     * @param measurement the measurement to check
+     * @return true if the value is out of range for its sensor type, false otherwise
      */
     @Override
     public boolean isOutOfRange(Measurement measurement) {
@@ -35,7 +35,7 @@ public class DefaultThresholdChecker implements ThresholdChecker {
         };
     }
 
-    // Grænseværdierne selv er tilladt, kun værdier udenfor giver alarm
+    // Boundary values themselves are permitted; only values outside trigger an alarm
     private boolean isOutside(double value, double min, double max) {
         return value < min || value > max;
     }

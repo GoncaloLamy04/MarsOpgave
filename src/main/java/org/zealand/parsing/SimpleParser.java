@@ -5,8 +5,8 @@ import org.zealand.contract.MeasurementParser;
 import org.zealand.contract.SensorType;
 
 /**
- * Omdanner sensorlinjer i formatet TYPE:værdi til en Measurement.
- * Ugyldigt input giver IllegalArgumentException.
+ * Parses sensor lines in the format TYPE:value into a {@link Measurement}.
+ * Invalid input throws {@link IllegalArgumentException}.
  */
 public class SimpleParser implements MeasurementParser {
 
@@ -14,11 +14,11 @@ public class SimpleParser implements MeasurementParser {
     private static final int EXPECTED_PARTS = 2;
 
     /**
-     * Omdanner en linje i formatet TYPE:værdi til en Measurement.
+     * Converts a line in the format TYPE:value into a {@link Measurement}.
      *
-     * @param line linjen der skal parses, fx "TEMP:27.4"
-     * @return den parsede måling
-     * @throws IllegalArgumentException hvis linjen er ugyldig
+     * @param line the line to parse, e.g. "TEMP:27.4"
+     * @return the parsed measurement
+     * @throws IllegalArgumentException if the line is invalid
      */
     @Override
     public Measurement parse(String line) {
@@ -33,7 +33,7 @@ public class SimpleParser implements MeasurementParser {
             throw new IllegalArgumentException("Input line cannot be null or empty");
         }
 
-        // -1 beholder tomme dele, så "TEMP:" giver to dele i stedet for én
+        // -1 retains trailing empty parts so "TEMP:" produces two parts instead of one
         String[] parts = line.trim().split(SEPARATOR, -1);
         if (parts.length != EXPECTED_PARTS || parts[0].isEmpty() || parts[1].isEmpty()) {
             throw new IllegalArgumentException("Invalid format. Expected TYPE:value");
@@ -57,7 +57,7 @@ public class SimpleParser implements MeasurementParser {
             throw new IllegalArgumentException("Invalid numeric value: " + text, e);
         }
 
-        // NaN udløser aldrig en alarm, så ikke-endelige værdier afvises
+        // NaN never triggers an alarm, so non-finite values are rejected
         if (!Double.isFinite(value)) {
             throw new IllegalArgumentException("Value must be a finite number: " + text);
         }
