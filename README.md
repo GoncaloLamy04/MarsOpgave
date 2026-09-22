@@ -20,7 +20,7 @@ mvn exec:java -Dexec.mainClass=org.zealand.server.MarsServer
 ```
 
 ### Sensorklient (Mattias)
-TODO
+I IntelliJ: åbn SensorClient.java og tryk på den grønne pil ved main, eller højreklik → Run. Vælg sensortype ved opstart eller giv den som argument (TEMP, O2, PRESSURE, CO2).
 
 ### GUI dashboard (bonus)
 Åbn `SensorDashboard.java` i `org.zealand.gui` og tryk på den grønne pil ved `main`, eller højreklik → Run.
