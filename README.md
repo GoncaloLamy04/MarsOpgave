@@ -22,6 +22,9 @@ mvn exec:java -Dexec.mainClass=org.zealand.server.MarsServer
 ### Sensorklient (Mattias)
 TODO
 
+### GUI dashboard (bonus)
+Åbn `SensorDashboard.java` i `org.zealand.gui` og tryk på den grønne pil ved `main`, eller højreklik → Run.
+
 ## Kør tests
 
 ```bash
