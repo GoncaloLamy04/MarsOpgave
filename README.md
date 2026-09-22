@@ -75,7 +75,7 @@ Grænseværdierne selv giver ikke alarm.
 Serveren lytter på port 5000 og accepterer sensorforbindelser i et evigt loop, som bliver dispatchet til SensorHandler i en fast threadpool på 5 tråde. Afbrudte klienter fanges og logges uden at påvirke de øvrige forbindelser.
 
 ### Klient og logger (Mattias)
-TODO
+SensorClient fanger ConnectException hvis serveren ikke kører og giver en forståelig besked i stedet for at crashe. FileMarsLogger kaster IllegalStateException hvis filen ikke kan skrives til.
 
 ## Manuel test af serveren
 
@@ -115,9 +115,9 @@ Vi brugte Google Antigravity og GitHub Copilot. Regler til agenten ligger i `AGE
 
 **Opgave til agenten:** Vi gav agenten en opgave om at overskrive vores test logger med vores rigtig FileMarsLogger, så systemet kunne virke efter vi alle merget vores issues.
 
-**Hvorfor afgrænset sådan:** Instruktionerne var afgrænset til at den ikke skulle ændre noget logik, den skulle følge copilot.instruction.md filen og får erstattet testlogger med FileMarsLogger.
+**Hvorfor afgrænset sådan:** Instruktionerne var afgrænset til at den ikke skulle ændre noget logik, den skulle følge copilot-instructions.md filen og får erstattet testlogger med FileMarsLogger.
 
-**Accepteret:** Et forslag vi accepterede var uni-test med en fakelogger og en testlogger i MarsServer, så vi kunne teste programmet.
+**Accepteret:** Et forslag vi accepterede var unit test med en fakelogger og en testlogger i MarsServer, så vi kunne teste programmet.
 
 **Ændret eller afvist:** Et forslag som vi ændrede var at dele SensorHandler klassen i to metoder, fordi copilot havde lavet et langt metode, som sagtens kunne deles op både for Clean Code og testning af programmet.
 
