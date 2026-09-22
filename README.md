@@ -117,3 +117,15 @@ Vi brugte Google Antigravity og GitHub Copilot. Regler til agenten ligger i `AGE
 **Accepteret:** TODO
 **Ændret eller afvist:** TODO
 **Test:** TODO
+
+### Review af hele systemet
+
+Da server-delen var på plads, bad vi agenten reviewe `MarsServer`, `SensorHandler` og de tilhørende klasser uden at ændre koden, som opgaven beskriver under "Brug AI som reviewer".
+
+**Accepteret:**
+- Genbrug én `SimpleParser` instans i stedet for en ny pr. klient (parseren er tilstandsløs, ligesom checker og logger allerede er delt)
+- Saml den duplikerede "mistede forbindelsen"-besked i `SensorHandler` i en hjælpemetode
+- Eksplicit UTF-8 charset på streams, i stedet for platformens standard
+
+**Fravalgt/noteret:**
+- Graceful shutdown med `awaitTermination`: uden for opgavens krav, men noteret som noget vi kunne have tilføjet
