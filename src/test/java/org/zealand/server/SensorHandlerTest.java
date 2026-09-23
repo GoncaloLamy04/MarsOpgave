@@ -2,11 +2,16 @@ package org.zealand.server;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.zealand.contract.MarsLogger;
+import org.zealand.contract.Measurement;
 import org.zealand.parsing.DefaultThresholdChecker;
 import org.zealand.parsing.SimpleParser;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,5 +66,22 @@ public class SensorHandlerTest {
 
         String outStr = sw.toString();
         assertTrue(outStr.startsWith("ERROR|"));
+    }
+
+    @Test
+    void handleLine_loggerThrows_writesToServerErrorsLog() throws IOException {
+        Files.deleteIfExists(Path.of("server-errors.log"));
+
+        MarsLogger throwingLogger = new MarsLogger() {
+            public void log(Measurement m, boolean alarm) { throw new RuntimeException("simulated failure"); }
+            public void error(String message) { }
+        };
+        SensorHandler h = new SensorHandler(null, 99, new SimpleParser(), new DefaultThresholdChecker(), throwingLogger);
+        StringWriter sw = new StringWriter();
+
+        h.handleLine("TEMP:20", new PrintWriter(sw, true));
+
+        String content = Files.readString(Path.of("server-errors.log"));
+        assertTrue(content.contains("Logging failed"));
     }
 }

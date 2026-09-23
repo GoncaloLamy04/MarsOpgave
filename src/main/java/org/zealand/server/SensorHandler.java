@@ -5,13 +5,10 @@ import org.zealand.contract.MeasurementParser;
 import org.zealand.contract.ThresholdChecker;
 import org.zealand.contract.MarsLogger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 /**
  * Handles a single sensor connection.
@@ -79,7 +76,7 @@ public class SensorHandler implements Runnable {
         try {
             logger.error("Sensor " + sensorId + " " + detail);
         } catch (Exception logEx) {
-            System.err.println("[LOG ERROR] " + logEx.getMessage());
+            reportLoggingFailure(logEx);
         }
     }
 
@@ -104,8 +101,7 @@ public class SensorHandler implements Runnable {
             try {
                 logger.log(m, alarm);
             } catch (Exception logEx) {
-                // Logging must not crash the handler
-                System.err.println("[LOG ERROR] " + logEx.getMessage());
+                reportLoggingFailure(logEx);
             }
 
             if (alarm) {
@@ -124,8 +120,24 @@ public class SensorHandler implements Runnable {
             try {
                 logger.error("Sensor " + sensorId + " bad line: " + ex.getMessage());
             } catch (Exception logEx) {
-                System.err.println("[LOG ERROR] " + logEx.getMessage());
+                reportLoggingFailure(logEx);
             }
+        }
+    }
+
+    /**
+     * Skriver logger-fejl til server-errors.log, så de ikke kun forsvinder i konsollen.
+     * Klient-protokollen påvirkes ikke, kaldet fanges internt.
+     *
+     * @param logEx den exception loggeren kastede
+     */
+    private synchronized void reportLoggingFailure(Exception logEx) {
+        System.err.println("[LOG ERROR] " + logEx.getMessage());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("server-errors.log", true))) {
+            writer.write("[" + LocalDateTime.now() + "] Logging failed: " + logEx.getMessage());
+            writer.newLine();
+        } catch (IOException writeEx) {
+            System.err.println("[CRITICAL] Could not write to server-errors.log either: " + writeEx.getMessage());
         }
     }
 }
