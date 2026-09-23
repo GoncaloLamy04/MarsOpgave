@@ -62,4 +62,14 @@ public class SensorHandlerTest {
         String outStr = sw.toString();
         assertTrue(outStr.startsWith("ERROR|"));
     }
+
+    @Test
+    void handleLine_loggerThrows_writesToServerErrorsLog() throws IOException {
+        Files.deleteIfExists(Path.of("server-errors.log"));
+        // Arrange: brug en FakeLogger hvis log() kaster en RuntimeException
+        // Kald handleLine med en gyldig linje
+
+        String content = Files.readString(Path.of("server-errors.log"));
+        assertTrue(content.contains("Logging failed"));
+    }
 }
