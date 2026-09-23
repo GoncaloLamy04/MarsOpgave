@@ -125,6 +125,12 @@ public class SensorHandler implements Runnable {
         }
     }
 
+    /**
+     * Skriver logger-fejl til server-errors.log, så de ikke kun forsvinder i konsollen.
+     * Klient-protokollen påvirkes ikke, kaldet fanges internt.
+     *
+     * @param logEx den exception loggeren kastede
+     */
     private synchronized void reportLoggingFailure(Exception logEx) {
         System.err.println("[LOG ERROR] " + logEx.getMessage());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("server-errors.log", true))) {
