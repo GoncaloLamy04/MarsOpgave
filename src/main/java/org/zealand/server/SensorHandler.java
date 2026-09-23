@@ -76,7 +76,7 @@ public class SensorHandler implements Runnable {
         try {
             logger.error("Sensor " + sensorId + " " + detail);
         } catch (Exception logEx) {
-            System.err.println("[LOG ERROR] " + logEx.getMessage());
+            reportLoggingFailure(logEx);
         }
     }
 
@@ -101,8 +101,7 @@ public class SensorHandler implements Runnable {
             try {
                 logger.log(m, alarm);
             } catch (Exception logEx) {
-                // Logging must not crash the handler
-                System.err.println("[LOG ERROR] " + logEx.getMessage());
+                reportLoggingFailure(logEx);
             }
 
             if (alarm) {

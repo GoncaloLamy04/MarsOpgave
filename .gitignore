@@ -37,3 +37,4 @@ build/
 
 ### Mars ###
 *.log
+server-errors.log
